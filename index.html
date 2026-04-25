@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The Freshman Playbook Nobody Gave Us · Gies Business</title>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;600;700;900&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --orange: #FF5F05;
+      --navy: #13294B;
+      --navy-dark: #0d1e38;
+      --navy-mid: #1c3660;
+      --white: #ffffff;
+      --off-white: #F7F7F5;
+      --light-gray: #EBEBEB;
+      --text-muted: #5a6a7a;
+      --orange-soft: rgba(255,95,5,0.07);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Source Sans 3', sans-serif;
+      background: var(--white);
+      color: var(--navy);
+      overflow-x: hidden;
+    }
+
+    /* ─── TOP BAR ─── */
+    .topbar {
+      background: var(--navy-dark);
+      padding: 0.6rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .topbar-brand {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.6);
+    }
+
+    .topbar-brand span { color: var(--orange); }
+
+    /* ─── HERO ─── */
+    .hero {
+      background: var(--navy);
+      padding: 5rem 2rem 5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-end;
+      position: relative;
+      overflow: hidden;
+      min-height: 480px;
+    }
+
+    /* Orange accent bar on left — like Gies page headers */
+    .hero::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 5px;
+      background: var(--orange);
+    }
+
+    /* Subtle grid pattern background */
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,95,5,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,95,5,0.04) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 1100px;
+      width: 100%;
+      margin: 0 auto;
+      padding-left: 1rem;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 1.2rem;
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards 0.1s;
+    }
+
+    .hero h1 {
+      font-family: 'Source Serif 4', serif;
+      font-size: clamp(2.4rem, 6vw, 4.8rem);
+      font-weight: 900;
+      line-height: 1.08;
+      color: var(--white);
+      max-width: 760px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.25s;
+    }
+
+    .hero h1 em {
+      color: var(--orange);
+      font-style: italic;
+    }
+
+    .hero-sub {
+      margin-top: 1.5rem;
+      font-size: clamp(1rem, 1.8vw, 1.12rem);
+      font-weight: 300;
+      color: rgba(255,255,255,0.7);
+      max-width: 580px;
+      line-height: 1.7;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.4s;
+    }
+
+    .hero-cta {
+      margin-top: 2.2rem;
+      display: inline-block;
+      background: var(--orange);
+      color: var(--white);
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.8rem 1.8rem;
+      text-decoration: none;
+      transition: background 0.2s;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.55s;
+    }
+
+    .hero-cta:hover { background: #e05200; }
+
+    /* ─── DIVIDER BAR ─── */
+    .bar {
+      height: 6px;
+      background: var(--orange);
+      width: 100%;
+    }
+
+    /* ─── SECTION WRAPPER ─── */
+    .section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 5rem 2rem;
+    }
+
+    .section-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 0.75rem;
+    }
+
+    .section h2 {
+      font-family: 'Source Serif 4', serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+    }
+
+    /* ─── MISSION (two-column) ─── */
+    .mission-bg {
+      background: var(--off-white);
+      border-top: 4px solid var(--navy);
+    }
+
+    .mission-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      max-width: 720px;
+    }
+
+    .mission-text p {
+      font-size: 1.05rem;
+      line-height: 1.9;
+      color: var(--text-muted);
+      font-weight: 300;
+    }
+
+    .mission-text p strong {
+      color: var(--navy);
+      font-weight: 600;
+    }
+
+    .mission-stat-box {
+      background: var(--navy);
+      padding: 3rem 2.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .stat {
+      border-left: 3px solid var(--orange);
+      padding-left: 1.2rem;
+    }
+
+    .stat-number {
+      font-family: 'Source Serif 4', serif;
+      font-size: 2.6rem;
+      font-weight: 900;
+      color: var(--white);
+      line-height: 1;
+    }
+
+    .stat-number span { color: var(--orange); }
+
+    .stat-label {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.55);
+      margin-top: 0.3rem;
+      font-weight: 400;
+      letter-spacing: 0.03em;
+    }
+
+    /* ─── VIDEO ─── */
+    .video-bg { background: var(--white); }
+
+    .video-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .video-section h2 { margin-bottom: 0.5rem; }
+
+    .video-section .intro-text {
+      font-size: 1rem;
+      color: var(--text-muted);
+      max-width: 520px;
+      margin-bottom: 2.5rem;
+      line-height: 1.7;
+      font-weight: 300;
+    }
+
+    .video-wrapper {
+      width: 100%;
+      max-width: 900px;
+      aspect-ratio: 16 / 9;
+      border-radius: 4px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(19,41,75,0.14);
+      border: 1px solid var(--light-gray);
+      position: relative;
+    }
+
+    .video-placeholder {
+      width: 100%;
+      height: 100%;
+      background: var(--navy);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1.2rem;
+    }
+
+    .play-btn {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      border: 2px solid var(--orange);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .play-btn svg { fill: var(--orange); margin-left: 4px; }
+
+    .video-placeholder p {
+      font-size: 0.78rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+    }
+
+    .closing-line {
+      margin-top: 2rem;
+      font-family: 'Source Serif 4', serif;
+      font-size: clamp(1.1rem, 2.2vw, 1.4rem);
+      font-weight: 600;
+      color: var(--navy);
+      text-align: center;
+      font-style: italic;
+    }
+
+    .video-wrapper iframe {
+      width: 100%; height: 100%; border: none;
+    }
+
+    /* ─── TEAM ─── */
+    .team-bg {
+      background: var(--navy);
+      border-top: 6px solid var(--orange);
+    }
+
+    .team-bg .section-label { color: var(--orange); }
+    .team-bg h2 { color: var(--white); }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .team-card {
+      background: var(--navy-mid);
+      padding: 2.5rem 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      text-align: center;
+      border-top: 3px solid transparent;
+      transition: border-color 0.2s;
+    }
+
+    .team-card:hover { border-color: var(--orange); }
+
+    .headshot {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: var(--navy-dark);
+      border: 3px solid var(--orange);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* Replace SVG with <img> when headshots are ready:
+       <img src="photo.jpg" alt="Name" style="width:100%;height:100%;object-fit:cover;"/> */
+    .headshot svg { opacity: 0.25; }
+
+    .member-name {
+      font-family: 'Source Serif 4', serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--white);
+    }
+
+    .member-major {
+      font-size: 0.83rem;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.6;
+      font-weight: 300;
+    }
+
+    .linkedin-link {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      color: var(--orange);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(255,95,5,0.35);
+      padding-bottom: 0.1rem;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .linkedin-link:hover { color: #fff; border-color: #fff; }
+      font-size: 0.67rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--orange);
+      background: rgba(255,95,5,0.12);
+      padding: 0.28rem 0.8rem;
+      border: 1px solid rgba(255,95,5,0.3);
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--navy-dark);
+      padding: 2.5rem 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.6rem;
+      text-align: center;
+    }
+
+    .footer-logo {
+      font-family: 'Source Serif 4', serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: 0.03em;
+    }
+
+    .footer-logo span { color: var(--orange); }
+
+    footer p {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.35);
+      letter-spacing: 0.03em;
+    }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      .mission-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .team-grid { grid-template-columns: 1fr; max-width: 320px; margin-left: auto; margin-right: auto; }
+      .hero { min-height: 380px; padding: 4rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <span class="topbar-brand">Gies College of Business &nbsp;·&nbsp; <span>Access & Engagement</span></span>
+    <span class="topbar-brand" style="color:rgba(255,255,255,0.35); font-size:0.7rem;">University of Illinois Urbana-Champaign</span>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner">
+      <p class="hero-eyebrow">First-Gen Minority Student Resource · Gies Business</p>
+      <h1>The Freshman Playbook <em>Nobody Gave Us</em></h1>
+      <p class="hero-sub">A toolkit built by graduating first-gen minority students who figured it out so you don't have to.</p>
+      <a href="#video" class="hero-cta">Watch Our Story ↓</a>
+    </div>
+  </section>
+
+  <div class="bar"></div>
+
+  <!-- MISSION -->
+  <div class="mission-bg">
+    <div class="section">
+      <div class="mission-grid">
+        <div class="mission-text">
+          <p class="section-label">Our Mission</p>
+          <h2>Built by students who've been where you are.</h2>
+          <p>
+            We were tasked with giving back to our community before exiting campus —
+            <strong>here's what we came up with.</strong> As first-gen minority students,
+            we are often at a disadvantage, usually not having anyone to tell us what is a
+            "no brainer" to everyone else. This survival guide will equip you with the
+            knowledge you need to <strong>thrive your first semester.</strong>
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- VIDEO -->
+  <div class="video-bg" id="video">
+    <div class="section">
+      <div class="video-section">
+        <p class="section-label">Watch</p>
+        <h2>Our Message to You</h2>
+        <p class="intro-text">We made this so you can hear it directly from us — students who figured it out the hard way, so you don't have to.</p>
+
+        <div class="video-wrapper">
+          <!-- ══════════════════════════════════════════
+               TO ADD YOUR VIDEO:
+               1. Delete the <div class="video-placeholder"> block
+               2. Replace with:
+
+               <iframe
+                 src="https://www.youtube.com/embed/YOUR_VIDEO_ID"
+                 allow="accelerometer; autoplay; clipboard-write;
+                        encrypted-media; gyroscope; picture-in-picture"
+                 allowfullscreen>
+               </iframe>
+          ══════════════════════════════════════════ -->
+          <div class="video-placeholder">
+            <div class="play-btn">
+              <svg width="26" height="26" viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+            </div>
+            <p>Video coming soon</p>
+          </div>
+        </div>
+
+      </div>
+    <p class="closing-line">Now you're ready to conquer campus. Good luck. 🧡</p>
+    </div>
+  </div>
+
+  <!-- TEAM -->
+  <div class="team-bg">
+    <div class="section">
+      <p class="section-label">The Team</p>
+      <h2>Meet the Makers</h2>
+
+      <div class="team-grid">
+
+        <!-- MEMBER 1 — update name, major, LinkedIn URL, and swap SVG for <img> when ready -->
+        <div class="team-card">
+          <div class="headshot">
+            <svg width="70" height="70" viewBox="0 0 80 80" fill="none">
+              <circle cx="40" cy="30" r="18" fill="white"/>
+              <ellipse cx="40" cy="72" rx="28" ry="18" fill="white"/>
+            </svg>
+          </div>
+          <p class="member-name">Your Name</p>
+          <p class="member-major">Your Major<br/>Class of 2026</p>
+          <a class="linkedin-link" href="https://linkedin.com/in/your-profile" target="_blank">LinkedIn ↗</a>
+        </div>
+
+        <!-- MEMBER 2 -->
+        <div class="team-card">
+          <div class="headshot">
+            <svg width="70" height="70" viewBox="0 0 80 80" fill="none">
+              <circle cx="40" cy="30" r="18" fill="white"/>
+              <ellipse cx="40" cy="72" rx="28" ry="18" fill="white"/>
+            </svg>
+          </div>
+          <p class="member-name">Your Name</p>
+          <p class="member-major">Your Major<br/>Class of 2026</p>
+          <a class="linkedin-link" href="https://linkedin.com/in/your-profile" target="_blank">LinkedIn ↗</a>
+        </div>
+
+        <!-- MEMBER 3 -->
+        <div class="team-card">
+          <div class="headshot">
+            <svg width="70" height="70" viewBox="0 0 80 80" fill="none">
+              <circle cx="40" cy="30" r="18" fill="white"/>
+              <ellipse cx="40" cy="72" rx="28" ry="18" fill="white"/>
+            </svg>
+          </div>
+          <p class="member-name">Your Name</p>
+          <p class="member-major">Your Major<br/>Class of 2026</p>
+          <a class="linkedin-link" href="https://linkedin.com/in/your-profile" target="_blank">LinkedIn ↗</a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Gies <span>Business</span> · First-Gen Toolkit</div>
+    <p>Made with care by first-gen students, for the ones coming after us.</p>
+    <p>University of Illinois Urbana-Champaign · Gies College of Business</p>
+  </footer>
+
+</body>
+</html>
